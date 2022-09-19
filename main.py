@@ -10,6 +10,7 @@ def game_start():
     upper_bound = upper_bound.lstrip("0")
     print("Let the games begin...\nI am thinking of a number between 1 and {}. Can you guess what it is? ".format(upper_bound))
     computers_number = random.randint(1, int(upper_bound))
+    print(computers_number)
     computer_hints = hints(computers_number)
     user_guesses(computers_number, computer_hints, upper_bound)
 
@@ -58,6 +59,15 @@ def user_guesses(computers_number,computer_hints, upper_limit):
                 print("Hint: You need to guess higher!\n")
             elif player_guess[current_round - 1] > computers_number:
                 print("Hint: You need to guess lower!\n")
+
+        if computers_number > 100 and current_round > 2:
+            old_guess = player_guess[current_round - 2]
+            newer_guess = player_guess[current_round - 1]
+            if (old_guess - computers_number > 0 and newer_guess - computers_number > 0) and (old_guess - computers_number < newer_guess - computers_number):
+                print("Your guess of {} was closer than your newer guess of {}".format(old_guess,newer_guess))
+            elif (old_guess - computers_number < 0 and newer_guess - computers_number < 0) and (old_guess - computers_number < newer_guess - computers_number):
+                print("Your guess of {} was closer than your older guess of {}".format(newer_guess,old_guess))
+
         print("------ Round {} ------\n".format(current_round))
         while incorrect_input is True:
             temporary_guess = input("Enter a guess: ")
